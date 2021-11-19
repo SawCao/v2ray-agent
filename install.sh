@@ -2469,7 +2469,7 @@ defaultBase64Code() {
 	local add=$6
 
 	local subAccount
-	subAccount=${email}
+	subAccount=${currentHost}_$(echo "${id}_currentHost" | md5sum | awk '{print $1}')
 
 	if [[ "${type}" == "vlesstcp" ]]; then
 
@@ -2479,7 +2479,7 @@ defaultBase64Code() {
 
 			echoContent yellow " ---> 格式化明文(VLESS+TCP+TLS/xtls-rprx-direct)"
 			echoContent green "协议类型：VLESS，地址：${host}，端口：${port}，用户ID：${id}，安全：xtls，传输方式：tcp，flow：xtls-rprx-direct，账户名:${email}\n"
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vless://${id}@${host}:${port}?encryption=none&security=xtls&type=tcp&host=${host}&headerType=none&sni=${host}&flow=xtls-rprx-direct#${email}
 EOF
 			echoContent yellow " ---> 二维码 VLESS(VLESS+TCP+TLS/xtls-rprx-direct)"
@@ -2492,7 +2492,7 @@ EOF
 
 			echoContent yellow " ---> 格式化明文(VLESS+TCP+TLS/xtls-rprx-splice)"
 			echoContent green "    协议类型：VLESS，地址：${host}，端口：${port}，用户ID：${id}，安全：xtls，传输方式：tcp，flow：xtls-rprx-splice，账户名:${email/direct/splice}\n"
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vless://${id}@${host}:${port}?encryption=none&security=xtls&type=tcp&host=${host}&headerType=none&sni=${host}&flow=xtls-rprx-splice#${email/direct/splice}
 EOF
 			echoContent yellow " ---> 二维码 VLESS(VLESS+TCP+TLS/xtls-rprx-splice)"
@@ -2505,7 +2505,7 @@ EOF
 			echoContent yellow " ---> 格式化明文(VLESS+TCP+TLS/xtls-rprx-splice)"
 			echoContent green "    协议类型：VLESS，地址：${host}，端口：${port}，用户ID：${id}，安全：tls，传输方式：tcp，账户名:${email/direct/splice}\n"
 
-			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+			cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vless://${id}@${host}:${port}?security=tls&encryption=none&host=${host}&headerType=none&type=tcp#${email}
 EOF
 			echoContent yellow " ---> 二维码 VLESS(VLESS+TCP+TLS)"
@@ -2518,7 +2518,7 @@ EOF
 
 		echoContent yellow " ---> 格式化明文(Trojan+TCP+TLS/xtls-rprx-direct)"
 		echoContent green "协议类型：Trojan，地址：${host}，端口：${port}，用户ID：${id}，安全：xtls，传输方式：tcp，flow：xtls-rprx-direct，账户名:${email}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan://${id}@${host}:${port}?encryption=none&security=xtls&type=tcp&host=${host}&headerType=none&sni=${host}&flow=xtls-rprx-direct#${email}
 EOF
 		echoContent yellow " ---> 二维码 Trojan(Trojan+TCP+TLS/xtls-rprx-direct)"
@@ -2531,7 +2531,7 @@ EOF
 
 		echoContent yellow " ---> 格式化明文(Trojan+TCP+TLS/xtls-rprx-splice)"
 		echoContent green "    协议类型：VLESS，地址：${host}，端口：${port}，用户ID：${id}，安全：xtls，传输方式：tcp，flow：xtls-rprx-splice，账户名:${email/direct/splice}\n"
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan://${id}@${host}:${port}?encryption=none&security=xtls&type=tcp&host=${host}&headerType=none&sni=${host}&flow=xtls-rprx-splice#${email/direct/splice}
 EOF
 		echoContent yellow " ---> 二维码 Trojan(Trojan+TCP+TLS/xtls-rprx-splice)"
@@ -2547,7 +2547,7 @@ EOF
 		echoContent green "    vmess://${qrCodeBase64Default}\n"
 		echoContent yellow " ---> 二维码 vmess(VMess+WS+TLS)"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vmess://${qrCodeBase64Default}
 EOF
 		echoContent green "    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vmess://${qrCodeBase64Default}\n"
@@ -2563,7 +2563,7 @@ EOF
 		echoContent yellow " ---> 通用vmess(VMess+TCP+TLS)链接"
 		echoContent green "    vmess://${qrCodeBase64Default}\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vmess://${qrCodeBase64Default}
 EOF
 		echoContent yellow " ---> 二维码 vmess(VMess+TCP+TLS)"
@@ -2577,7 +2577,7 @@ EOF
 		echoContent yellow " ---> 格式化明文(VLESS+WS+TLS)"
 		echoContent green "    协议类型：VLESS，地址：${add}，伪装域名/SNI：${host}，端口：${port}，用户ID：${id}，安全：tls，传输方式：ws，路径:/${path}，账户名:${email}\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vless://${id}@${add}:${port}?encryption=none&security=tls&type=ws&host=${host}&sni=${host}&path=%2f${path}#${email}
 EOF
 
@@ -2592,7 +2592,7 @@ EOF
 		echoContent yellow " ---> 格式化明文(VLESS+gRPC+TLS)"
 		echoContent green "    协议类型：VLESS，地址：${add}，伪装域名/SNI：${host}，端口：${port}，用户ID：${id}，安全：tls，传输方式：gRPC，alpn：h2，serviceName:${path}，账户名:${email}\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 vless://${id}@${add}:${port}?encryption=none&security=tls&type=grpc&host=${host}&path=${path}&serviceName=${path}&alpn=h2&sni=${host}#${email}
 EOF
 		echoContent yellow " ---> 二维码 VLESS(VLESS+gRPC+TLS)"
@@ -2603,7 +2603,7 @@ EOF
 		echoContent yellow " ---> Trojan(TLS)"
 		echoContent green "    trojan://${id}@${host}:${port}?peer=${host}&sni=${host}&alpn=http1.1#${host}_Trojan\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan://${id}@${host}:${port}?peer=${host}&sni=${host}&alpn=http1.1#${host}_Trojan
 EOF
 		echoContent yellow " ---> 二维码 Trojan(TLS)"
@@ -2615,7 +2615,7 @@ EOF
 		echoContent yellow " ---> Trojan gRPC(TLS)"
 		echoContent green "    trojan://${id}@${host}:${port}?encryption=none&peer=${host}&security=tls&type=grpc&sni=${host}&alpn=h2&path=${path}&serviceName=${path}#${host}_Trojan_gRPC\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan://${id}@${host}:${port}?encryption=none&peer=${host}&security=tls&type=grpc&sni=${host}&alpn=h2&path=${path}&serviceName=${path}#${host}_Trojan_gRPC
 EOF
 		echoContent yellow " ---> 二维码 Trojan gRPC(TLS)"
@@ -2626,7 +2626,7 @@ EOF
 		echoContent yellow " ---> Trojan-Go(WS+TLS) Shadowrocket"
 		echoContent green "    trojan://${id}@${add}:${port}?allowInsecure=0&&peer=${host}&sni=${host}&plugin=obfs-local;obfs=websocket;obfs-host=${host};obfs-uri=${path}#${host}_Trojan_ws\n"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan://${id}@${add}:${port}?allowInsecure=0&&peer=${host}&sni=${host}&plugin=obfs-local;obfs=websocket;obfs-host=${host};obfs-uri=${path}#${host}_Trojan_ws
 EOF
 		echoContent yellow " ---> 二维码 Trojan-Go(WS+TLS) Shadowrocket"
@@ -2635,7 +2635,7 @@ EOF
 		path=$(echo "${path}" | awk -F "[/]" '{print $2}')
 		echoContent yellow " ---> Trojan-Go(WS+TLS) QV2ray"
 
-		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${subAccount}"
+		cat <<EOF >>"/etc/v2ray-agent/subscribe_tmp/${email}"
 trojan-go://${id}@${add}:${port}?sni=${host}&type=ws&host=${host}&path=%2F${path}#${host}_Trojan_ws
 EOF
 
