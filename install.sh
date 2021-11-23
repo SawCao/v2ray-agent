@@ -2469,7 +2469,7 @@ defaultBase64Code() {
 	local add=$6
 
 	local subAccount
-	subAccount=${currentHost}_$(echo "${id}_currentHost" | md5sum | awk '{print $1}')
+	subAccount=${email}
 
 	if [[ "${type}" == "vlesstcp" ]]; then
 
