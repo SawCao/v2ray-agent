@@ -4235,7 +4235,8 @@ subscribe() {
 		rm -rf /etc/v2ray-agent/subscribe/*
 		rm -rf /etc/v2ray-agent/subscribe_tmp/*
 		showAccounts > /dev/null
-		# mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
+		mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
+		echo $(ls /etc/v2ray-agent/subscribe/)
 		if [[ -n $(ls /etc/v2ray-agent/subscribe/) ]]; then
 			echo "开始显示订阅～～～～～"
 			find /etc/v2ray-agent/subscribe | while read -r email; do
