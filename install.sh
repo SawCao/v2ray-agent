@@ -4234,10 +4234,10 @@ subscribe() {
 		echoContent yellow "# 每次添加、删除账号需要重新查看订阅"
 		rm -rf /etc/v2ray-agent/subscribe/*
 		rm -rf /etc/v2ray-agent/subscribe_tmp/*
-		showAccounts
-		mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
-
+		showAccounts > /dev/null
+		# mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
 		if [[ -n $(ls /etc/v2ray-agent/subscribe/) ]]; then
+			echo "开始显示订阅～～～～～"
 			find /etc/v2ray-agent/subscribe | while read -r email; do
 				email=$(echo "${email}" | awk -F "[s][u][b][s][c][r][i][b][e][/]" '{print $2}')
 				local base64Result
