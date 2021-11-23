@@ -2737,8 +2737,6 @@ showAccounts() {
 			defaultBase64Code trojangrpc "$(echo "${user}" | jq -r .email)" "$(echo "${user}" | jq -r .password)" "${currentHost}:${currentPort}" "${serviceName}" "${currentAdd}"
 		done
 	fi
-
-	subscribe 1
 	
 	if [[ -z ${show} ]]; then
 		echoContent red " ---> 未安装"
