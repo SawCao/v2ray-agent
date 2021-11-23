@@ -4234,7 +4234,7 @@ subscribe() {
 		echoContent yellow "# 每次添加、删除账号需要重新查看订阅"
 		rm -rf /etc/v2ray-agent/subscribe/*
 		rm -rf /etc/v2ray-agent/subscribe_tmp/*
-		showAccounts >/dev/null
+		showAccounts
 		mv /etc/v2ray-agent/subscribe_tmp/* /etc/v2ray-agent/subscribe/
 
 		if [[ -n $(ls /etc/v2ray-agent/subscribe/) ]]; then
