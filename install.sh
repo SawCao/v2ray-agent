@@ -2469,7 +2469,7 @@ defaultBase64Code() {
 	local add=$6
 
 	local subAccount
-	subAccount=${id}
+	subAccount=${email}
 
 	if [[ "${type}" == "vlesstcp" ]]; then
 
